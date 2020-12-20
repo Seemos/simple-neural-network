@@ -1,27 +1,13 @@
 #include<iostream>
 #include<vector>
+#include"io.h"
 #include"matrix.h"
 #include"activation_functions.h"
 #include"neural_network.h"
 
-std::vector<std::vector<long double>> input = {
-	{0,0,0},
-	{1,0,0},
-	{1,0,1},
-	{1,1,0},
-};
-
-std::vector<std::vector<long double>> output = {
-	{0},
-	{0},
-	{1},
-	{1}
-};
-
-
 int main() {
-	matrix mat_input = create_matrix_from_vector(input);
-	matrix mat_target = create_matrix_from_vector(output);
+	matrix mat_input = create_matrix_from_vector(read_csv("./data/input.csv"));
+	matrix mat_target = create_matrix_from_vector(read_csv("./data/output.csv"));
 	matrix result;
 
 	neural_network net = create_neural_network(3, 4, 1);
