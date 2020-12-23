@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <fstream>
+#include <iostream>
 #include "neural_network.h"
 #include "activation_functions.h"
 #include "matrix.h"
@@ -55,6 +56,10 @@ matrix query_neural_network(neural_network& net, const matrix& input) {
 void save_neural_network(neural_network& net, const char* file_path) {
 	FILE* output;
 	output = fopen(file_path, "wb");
+	if(!output) {
+		std::cerr << "Error: could not open file " << file_path << std::endl;
+		exit(1);
+	}
 	fwrite(&net, sizeof(&net), 1, output);
 	fclose(output);
 }
@@ -63,6 +68,10 @@ neural_network load_neural_network(const char* file_path) {
 	neural_network net;
 	FILE* input;
 	input = fopen(file_path, "rb");
+	if(!input) {
+		std::cerr << "Error: could not open file " << file_path << std::endl;
+		exit(1);
+	};
 	fread(&net, sizeof(&net), 1, input);
 	fclose(input);
 	return net;
