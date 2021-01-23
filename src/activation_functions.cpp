@@ -7,3 +7,6 @@ long double sigmoid(long double x) {
 long double sigmoid_derivative(long double x) {
 	return sigmoid(x) * (1 - sigmoid(x));
 }
+
+long double (*activations[])(long double) = {sigmoid};
+long double (*derivatives[])(long double) = {sigmoid_derivative};

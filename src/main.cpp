@@ -10,8 +10,7 @@ int main() {
 	matrix mat_target = create_matrix_from_vector(read_csv("./data/output.csv"));
 	matrix result;
 
-	neural_network net = create_neural_network(3, 4, 1);
-
+	neural_network net = create_neural_network(3, 4, 1, SIGMOID, SIGMOID);
 	printf("The untrained predictions:\n");
 	result = query_neural_network(net, mat_input);
 	print_matrix(result);
