@@ -1,6 +1,3 @@
-#ifndef ACTIVATION_FUNCTIONS_H
-#define ACTIVATION_FUNCTIONS_H
-
 #include<cmath>
 #include "activation_functions.h"
 
@@ -10,5 +7,3 @@ long double sigmoid(long double x) {
 long double sigmoid_derivative(long double x) {
 	return sigmoid(x) * (1 - sigmoid(x));
 }
-
-#endif
