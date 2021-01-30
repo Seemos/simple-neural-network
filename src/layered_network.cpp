@@ -15,3 +15,20 @@ void add_hidden_layer(layered_network& net, unsigned n_neurons, unsigned activat
     net.topology_neurons.push_back(n_neurons);
     net.topology_functions.push_back(activation);
 }
+
+void build_layered_network(layered_network& net){
+    net.topology_functions.push_back(net.f_outputs);
+    net.topology_neurons.push_back(net.n_outputs);
+
+    unsigned n_weights = net.topology_functions.size();
+
+    net.weights.reserve(n_weights);
+    net.errors.reserve(n_weights);
+    net.deltas.reserve(n_weights);
+    net.outputs.reserve(n_weights + 1);
+
+    for (unsigned i = 0; i < n_weights; i++)
+    {
+        net.weights.push_back(create_random_matrix(net.topology_neurons[i], net.topology_neurons[i+1]));
+    }
+}
