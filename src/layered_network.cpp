@@ -32,3 +32,38 @@ void build_layered_network(layered_network& net){
         net.weights.push_back(create_random_matrix(net.topology_neurons[i], net.topology_neurons[i+1]));
     }
 }
+
+void train_layered_network(layered_network& net, matrix& input, const matrix& target, long double learning_rate){
+    unsigned max_index = net.topology_functions.size() - 1;
+
+    /*
+    * Calculate the values of all layers.
+    * by using the outputs of the layers before.
+    * input matriy is treatened as output as well
+    */
+    net.outputs.push_back(input);
+    for(unsigned i = 0; i <= max_index; i++){
+        net.outputs.push_back(apply_function(dot(net.outputs[i], net.weights[i]), activations[net.topology_functions[i]]));
+    }
+
+    /*
+    * Backpropagation 
+    */
+    net.errors.push_back(target - net.outputs[net.topology_functions.size() - 1]);
+
+    for(unsigned i = 0; i <= max_index; i++){
+        net.deltas.push_back(net.errors[i] * apply_function(net.errors[i], derivatives[net.topology_functions[max_index - i]]));
+        net.errors.push_back(dot(net.deltas[i], transpose(net.weights[max_index - i])));
+    }
+    
+    /*
+    * weight updating
+    */
+    for(unsigned i = 0; i <= max_index; i++){
+        net.weights[max_index - i] +=  dot(transpose(net.outputs[max_index - i]), net.deltas[i]) * learning_rate;
+    }
+
+    net.outputs.clear();
+    net.errors.clear();
+    net.deltas.clear();
+}
