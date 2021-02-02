@@ -39,7 +39,7 @@ void train_layered_network(layered_network& net, matrix& input, const matrix& ta
     /*
     * Calculate the values of all layers.
     * by using the outputs of the layers before.
-    * input matriy is treatened as output as well
+    * input matrix is treatened as output as well
     */
     net.outputs.push_back(input);
     for(unsigned i = 0; i <= max_index; i++){
@@ -66,4 +66,18 @@ void train_layered_network(layered_network& net, matrix& input, const matrix& ta
     net.outputs.clear();
     net.errors.clear();
     net.deltas.clear();
+}
+
+matrix query_layered_network(layered_network& net, const matrix& input){
+    matrix result;
+    unsigned max_index = net.topology_functions.size() - 1;
+    net.outputs.push_back(input);
+    for(unsigned i = 0; i <= max_index; i++){
+        net.outputs.push_back(apply_function(dot(net.outputs[i], net.weights[i]), activations[net.topology_functions[i]]));
+    }
+    result = net.outputs[max_index + 1];
+    net.outputs.clear();
+    net.errors.clear();
+    net.deltas.clear();
+    return result;
 }
