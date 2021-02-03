@@ -57,6 +57,18 @@ matrix query_neural_network(neural_network& net, const matrix& input) {
 	return net.layer_output;
 }
 
+long double get_error(neural_network& net, const matrix& input, const matrix& target){
+	matrix mat_error =  target - query_neural_network(net, input);
+	long double error = 0;
+	for(unsigned i = 0; i < mat_error.n_rows; i++){
+		for(unsigned j = 0; j < mat_error.n_cols; j++){
+			error += pow(mat_error.values[i][j], 2);
+		}
+	}
+	error/=(mat_error.n_cols*mat_error.n_rows);
+	return error;
+}
+
 void save_neural_network(neural_network& net, const char* file_path) {
 	FILE* output;
 	output = fopen(file_path, "wb");
