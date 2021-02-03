@@ -22,10 +22,10 @@ int main() {
 
 	print_matrix(query_layered_network(net, mat_input));
 	
-	printf("----------Input------------");
+	printf("----------Input------------\n");
 	print_matrix(mat_input);
-	printf("----------Target-----------");
+	printf("----------Target-----------\n");
 	print_matrix(mat_target);
-	printf("----------Result-----------");
+	printf("----------Result-----------\n");
 	print_matrix(query_layered_network(net, mat_input));
 }
