@@ -14,6 +14,7 @@ int main() {
 	printf("The untrained predictions:\n");
 	result = query_neural_network(net, mat_input);
 	print_matrix(result);
+	printf("untrained error: %Lf\n", get_error(net, mat_input, mat_target));
 
 	printf("Starting training...\n");
 	for (unsigned i = 0; i < 1000; i++) {
@@ -23,6 +24,7 @@ int main() {
 	printf("The values should be 0,0,1,1\n");
 	result = query_neural_network(net, mat_input);
 	print_matrix(result);
+	printf("trained error: %Lf\n", get_error(net, mat_input, mat_target));
 
 	printf("Saving the net to a file\n");
 	save_neural_network(net, "net.dat");
